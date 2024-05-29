@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.34916.146
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tris_Multiplayer_S", "Tris_Multiplayer_S\Tris_Multiplayer_S.csproj", "{AD69EEC5-DE74-48B9-9979-72C08ACD2116}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AD69EEC5-DE74-48B9-9979-72C08ACD2116}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD69EEC5-DE74-48B9-9979-72C08ACD2116}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD69EEC5-DE74-48B9-9979-72C08ACD2116}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD69EEC5-DE74-48B9-9979-72C08ACD2116}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {474D8BB4-D088-471A-AA1E-16E051C8F58C}
+	EndGlobalSection
+EndGlobal
