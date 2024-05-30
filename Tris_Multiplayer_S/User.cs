@@ -37,8 +37,8 @@ namespace Tris_Multiplayer_S
         }
         public User(string name, string password)
         {
-            Username = name;
-            Password = password;
+            this.Username = name;
+            this.Password = password;
             Win = 0;
             Lose = 0;
             Tie = 0;
