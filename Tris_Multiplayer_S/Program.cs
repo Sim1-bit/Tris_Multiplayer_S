@@ -8,6 +8,7 @@ namespace Tris_Multiplayer_S
         static async Task Main(string[] args)
         {
             Server server = new Server(1024);
+            Database.ConnectionStart();
             await server.StartAsync();
         }
     }

@@ -43,6 +43,15 @@ namespace Tris_Multiplayer_S
             Lose = 0;
             Tie = 0;
         }
+
+        public User(string name, string password, int win, int lose, int tie)
+        {
+            this.Username = name;
+            this.Password = password;
+            Win = win;
+            Lose = lose;
+            Tie = tie;
+        }
         public User(User aux)
         {
             Username = aux.Username;

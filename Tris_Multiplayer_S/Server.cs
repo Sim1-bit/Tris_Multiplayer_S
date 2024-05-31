@@ -46,7 +46,15 @@ namespace Tris_Multiplayer_S
                 {
                     // Received an array of strings
                     string[] receivedArray = JsonSerializer.Deserialize<string[]>(receivedJson);
-                    var responseObject = new User(receivedArray[0], receivedArray[1]);
+                    User responseObject = null;
+                    if (receivedArray.Length == 2)
+                    {
+                        responseObject = Database.Access(receivedArray[0], receivedArray[1]);
+                    }
+                    else if(receivedArray.Length == 3)
+                    {
+                        responseObject = Database.Registration(receivedArray[0], receivedArray[1]);
+                    }
                     Console.WriteLine("Name: {0} Password: {1}\n Win: {2} Lose: {3} Tie: {4}", responseObject.Username, responseObject.Password, responseObject.Win, responseObject.Lose, responseObject.Tie);
                     string responseJson = JsonSerializer.Serialize(responseObject);
                     byte[] responseBytes = Encoding.UTF8.GetBytes(responseJson);
