@@ -55,8 +55,9 @@ namespace Tris_Multiplayer_S
                     {
                         responseObject = Database.Registration(receivedArray[0], receivedArray[1]);
                     }
+                    string[] responseArray = { responseObject.Username, responseObject.Password, responseObject.Win.ToString(), responseObject.Lose.ToString(), responseObject.Tie.ToString() };
                     Console.WriteLine("Name: {0} Password: {1}\n Win: {2} Lose: {3} Tie: {4}", responseObject.Username, responseObject.Password, responseObject.Win, responseObject.Lose, responseObject.Tie);
-                    string responseJson = JsonSerializer.Serialize(responseObject);
+                    string responseJson = JsonSerializer.Serialize(responseArray);
                     byte[] responseBytes = Encoding.UTF8.GetBytes(responseJson);
                     await stream.WriteAsync(responseBytes, 0, responseBytes.Length);
                 }

@@ -49,7 +49,7 @@ namespace Tris_Multiplayer_S
         public static User Registration(string name, string password)
         {
             if (IsAccount(name))
-                return Access("Aux", "Aux");
+                return new User("", "");
 
             string querry = "INSERT INTO account (name, password) VALUES (@name, @password);";
             MySqlCommand cmd = new MySqlCommand(querry, Connection);
@@ -79,7 +79,7 @@ namespace Tris_Multiplayer_S
         public static User Access(string name, string password)
         {
             if (!IsPassowordCorrect(name, password))
-                return Access("Aux", "Aux");
+                return new User("", "");
             string querry = "SELECT * FROM account JOIN user WHERE name = @name AND password = @password;";
             MySqlCommand cmd = new MySqlCommand(querry, Connection);
             cmd.Parameters.AddWithValue("@name", name);

@@ -52,6 +52,7 @@ namespace Tris_Multiplayer_S
             Lose = lose;
             Tie = tie;
         }
+
         public User(User aux)
         {
             Username = aux.Username;
@@ -59,6 +60,11 @@ namespace Tris_Multiplayer_S
             Win = aux.Win;
             Lose = aux.Lose;
             Tie = aux.Tie;
+        }
+
+        public bool IsAux
+        {
+            get => Username == null;
         }
     }
 }
