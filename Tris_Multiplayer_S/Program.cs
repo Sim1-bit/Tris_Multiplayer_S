@@ -5,10 +5,11 @@ namespace Tris_Multiplayer_S
 {
     internal class Program
     {
-        static async Task Main(string[] args)
+        static void Main(string[] args)
         {
             ServerAccount server = new ServerAccount();
             Database.ConnectionStart();
+            ServerGame game = new ServerGame();
         }
     }
 }

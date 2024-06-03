@@ -47,6 +47,13 @@ namespace Tris_Multiplayer_S
             NetworkStream stream1 = client1.GetStream();
             NetworkStream stream2 = client2.GetStream();
 
+            string messageToSend = JsonSerializer.Serialize(true);
+            byte[] data = Encoding.UTF8.GetBytes(messageToSend);
+            stream1.Write(data, 0, data.Length);
+            messageToSend = JsonSerializer.Serialize(false);
+            data = Encoding.UTF8.GetBytes(messageToSend);
+            stream2.Write(data, 0, data.Length);
+
             Thread thread1 = new Thread(() => HandleClient(client1, stream1, stream2));
             Thread thread2 = new Thread(() => HandleClient(client2, stream2, stream1));
 
