@@ -13,6 +13,7 @@ namespace Tris_Multiplayer_S
 {
     public class ServerGame : Server
     {
+        private List<Game> games = new List<Game>();
         private List<TcpClient> clients = new List<TcpClient>();
         private object clientLock = new object();
         public ServerGame() : base(53000)
@@ -35,14 +36,15 @@ namespace Tris_Multiplayer_S
                     {
                         TcpClient client1 = clients[clients.Count - 2];
                         TcpClient client2 = clients[clients.Count - 1];
-                        Thread clientThread = new Thread(() => HandleCommunication(client1, client2));
+                        games.Add(new Game(client1, client2));
+                        Thread clientThread = new Thread(() => HandleCommunication(client1, client2, games[games.Count - 1]));
                         clientThread.Start();
                     }
                 }
             }
         }
 
-        private void HandleCommunication(TcpClient client1, TcpClient client2)
+        private void HandleCommunication(TcpClient client1, TcpClient client2, Game game)
         {
             NetworkStream stream1 = client1.GetStream();
             NetworkStream stream2 = client2.GetStream();
@@ -54,14 +56,14 @@ namespace Tris_Multiplayer_S
             data = Encoding.UTF8.GetBytes(messageToSend);
             stream2.Write(data, 0, data.Length);
 
-            Thread thread1 = new Thread(() => HandleClient(client1, stream1, stream2));
-            Thread thread2 = new Thread(() => HandleClient(client2, stream2, stream1));
+            Thread thread1 = new Thread(() => HandleClient(client1, stream1, stream2, game));
+            Thread thread2 = new Thread(() => HandleClient(client2, stream2, stream1, game));
 
             thread1.Start();
             thread2.Start();
         }
 
-        private void HandleClient(TcpClient client, NetworkStream clientStream, NetworkStream peerStream)
+        private void HandleClient(TcpClient client, NetworkStream clientStream, NetworkStream peerStream, Game game)
         {
             try
             {
@@ -77,11 +79,28 @@ namespace Tris_Multiplayer_S
 
                     string receivedMessage = Encoding.UTF8.GetString(buffer, 0, bytesRead);
                     int[] receivedArray = JsonSerializer.Deserialize<int[]>(receivedMessage);
-                    Console.WriteLine(receivedArray);
-                    // Invia dati al peer
-                    string messageToSend = JsonSerializer.Serialize(receivedArray);
-                    byte[] data = Encoding.UTF8.GetBytes(messageToSend);
-                    peerStream.Write(data, 0, data.Length);
+
+                    bool? aux = game.Match(receivedArray[0], receivedArray[1], game.isPlayer1(client));
+                    if(aux == null)
+                    {
+                        // Invia dati al peer
+                        string messageToSend = JsonSerializer.Serialize(receivedArray);
+                        byte[] data = Encoding.UTF8.GetBytes(messageToSend);
+                        peerStream.Write(data, 0, data.Length);
+                    }
+                    else if((bool)aux == game.isPlayer1(client))
+                    {
+                        string messageToSend = JsonSerializer.Serialize(false);
+                        byte[] data = Encoding.UTF8.GetBytes(messageToSend);
+                        peerStream.Write(data, 0, data.Length);
+                    }
+                    else
+                    {
+                        string messageToSend = JsonSerializer.Serialize(true);
+                        byte[] data = Encoding.UTF8.GetBytes(messageToSend);
+                        peerStream.Write(data, 0, data.Length);
+                    }
+                    
                 }
             }
             catch (Exception Err)
